@@ -9,7 +9,7 @@ The `cdk.json` file tells the CDK Toolkit how to execute your app.
 On your local machine, run:
 
 ```sh
-GITHUB_REPOSITORY=salchichongallo/lab-iac-web-cdk cdk deploy GitHubOidcStack
+GITHUB_REPOSITORY='salchichongallo/lab-iac-web-cdk:*' cdk deploy GitHubOidcStack
 ```
 
 The stack gives administrator access to the newly created role. You can tweak the stack to customize the given policies.

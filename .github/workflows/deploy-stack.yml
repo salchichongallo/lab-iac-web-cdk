@@ -1,0 +1,34 @@
+name: "Deploy Stack"
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js Version
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: ".nvmrc"
+          cache: "npm"
+
+      - name: Install Dependencies
+        run: npm ci --ignore-scripts --no-audit
+
+      - uses: aws-actions/configure-aws-credentials@main
+        with:
+          aws-region: ${{ vars.AWS_DEFAULT_REGION }}
+
+      - name: Deploy to AWS
+        run: npx cdk deploy LabIacWebCdkStack --require-approval=never

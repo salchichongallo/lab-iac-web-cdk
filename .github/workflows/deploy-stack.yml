@@ -26,9 +26,10 @@ jobs:
       - name: Install Dependencies
         run: npm ci --ignore-scripts --no-audit
 
-      - uses: aws-actions/configure-aws-credentials@main
+      - uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-region: ${{ vars.AWS_DEFAULT_REGION }}
+          role-to-assume: ${{ vars.ARN_ROLE_TO_ASSUME }}
 
       - name: Deploy to AWS
         run: npx cdk deploy LabIacWebCdkStack --require-approval=never

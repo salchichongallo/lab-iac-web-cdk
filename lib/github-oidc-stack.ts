@@ -2,12 +2,19 @@ import * as cdk from "aws-cdk-lib";
 import { Construct } from "constructs";
 import * as iam from "aws-cdk-lib/aws-iam";
 
-const REPOSITORY = process.env.GITHUB_REPOSITORY;
 const CLIENT_ID = "sts.amazonaws.com";
 const GITHUB_DOMAIN = "token.actions.githubusercontent.com";
 
+interface GitHubStackProps extends cdk.StackProps {
+  repository: string;
+}
+
 export class GitHubOidcStack extends cdk.Stack {
-  constructor(scope: Construct, id: string, props?: cdk.StackProps) {
+  constructor(
+    readonly scope: Construct,
+    readonly id: string,
+    private readonly props?: GitHubStackProps
+  ) {
     super(scope, id, props);
 
     const provider = new iam.OpenIdConnectProvider(
@@ -19,7 +26,7 @@ export class GitHubOidcStack extends cdk.Stack {
       }
     );
 
-    const allowedRepositories = [`repo:${REPOSITORY}`];
+    const allowedRepositories = [`repo:${this.props!.repository}`];
     const conditions: iam.Conditions = {
       StringEquals: {
         [`${GITHUB_DOMAIN}:aud`]: CLIENT_ID,

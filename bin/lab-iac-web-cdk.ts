@@ -10,6 +10,7 @@ new GitHubOidcStack(app, "GitHubOidcStack", {
     account: process.env.CDK_DEFAULT_ACCOUNT,
     region: process.env.CDK_DEFAULT_REGION,
   },
+  repository: process.env.GITHUB_REPOSITORY!,
 });
 
 /* For more information, see https://docs.aws.amazon.com/cdk/latest/guide/environments.html */

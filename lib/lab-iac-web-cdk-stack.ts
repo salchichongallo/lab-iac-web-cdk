@@ -15,6 +15,7 @@ export class LabIacWebCdkStack extends cdk.Stack {
         entry: path.join(__dirname, "../src/lambdas/hello-world.ts"),
         handler: "handler",
         runtime: lambda.Runtime.NODEJS_20_X,
+        logRetention: cdk.aws_logs.RetentionDays.ONE_DAY,
       }
     );
 

@@ -13,7 +13,7 @@ export class LabIacWebCdkStack extends cdk.Stack {
       {
         functionName: "HelloWorldLambda",
         entry: path.join(__dirname, "../src/lambdas/hello-world.ts"),
-        handler: "handler",
+        handler: "index.handler",
         runtime: lambda.Runtime.NODEJS_20_X,
       }
     );
